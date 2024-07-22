@@ -7,6 +7,8 @@ import { fetchFromApi } from "./api";
 import { useEffect } from "react";
 import { getApiConfiguration, getGenres } from "./store/homeSlice";
 import { Details } from "./pages/Details";
+import { Explore } from "./pages/Explore";
+import { Search } from "./pages/Search";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +45,8 @@ function App() {
       <Routes>
         <Route element={<Home />} index />
         <Route path="/:mediaType/:id" element={<Details />} />
+        <Route path="/explore/:mediaType" element={<Explore />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       <Footer />
     </main>

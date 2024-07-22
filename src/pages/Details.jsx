@@ -6,6 +6,7 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { FaPlay } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import NoPoster from "../assets/no-poster.png";
 
 export const Details = () => {
   const { mediaType, id } = useParams();
@@ -49,10 +50,10 @@ export const Details = () => {
         </div>
         <div className="flex gap-10 text-white  z-10 py-32">
           <div className="overflow-hidden flex-shrink-0  ">
-            <img
+            <Img
               src={url?.backdrop + data?.poster_path}
               alt=""
-              className="max-w-[350px] rounded-xl"
+              className="max-w-[350px]  rounded-xl"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -86,57 +87,69 @@ export const Details = () => {
                 <FaPlay className="absolute hidden group-hover:text-red-500 group-hover:block z-20 text-5xl  top-0 bottom-0 left-0 right-0 m-auto" />
               </div>
             </div>
-            <div className="overflow-hidden">
-              <h4>Similar Movies</h4>
-              <div className="grid grid-cols-5 gap-4">
-                {similar?.results?.slice(0, 5).map((item) => {
-                  let posterImage = url?.backdrop + item?.poster_path;
-                  return (
-                    <Link
-                      to={`/movie/${item?.id}`}
-                      key={item?.id}
-                      className="group relative"
-                    >
-                      <img
-                        src={posterImage}
-                        alt=""
-                        className="rounded-lg  group-hover:opacity-40"
-                      />
-                      <p className="group-hover:text-blue-500 text-center pt-2">
-                        {item?.original_title}
-                      </p>
-                    </Link>
-                  );
-                })}
+            {similar?.results?.length > 1 ? (
+              <div className="overflow-hidden">
+                <h4>Similar {mediaType === "tv" ? "Tv Shows" : "Movies"}</h4>
+                <div className="grid grid-cols-5 gap-4">
+                  {similar?.results?.slice(0, 4)?.map((item) => {
+                    let posterImage = item?.poster_path
+                      ? url?.backdrop + item?.poster_path
+                      : NoPoster;
+                    return (
+                      <Link
+                        to={`/${mediaType}/${item?.id}`}
+                        key={item?.id}
+                        className="group relative"
+                      >
+                        <Img
+                          src={posterImage || NoPoster}
+                          alt=""
+                          className="rounded-lg  group-hover:opacity-40"
+                        />
+                        <p className="group-hover:text-blue-500 text-center pt-2">
+                          {item?.original_title || item?.name}
+                        </p>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <div className="overflow-hidden">
-              <h4>Recommendations</h4>
-              <div className="grid grid-cols-5 gap-4">
-                {recommendations?.results?.slice(0, 5).map((item) => {
-                  let posterImage = url?.backdrop + item?.poster_path;
-                  return (
-                    <Link
-                      to={`/movie/${item?.id}`}
-                      key={item?.id}
-                      className="group relative"
-                    >
-                      <img
-                        src={posterImage}
-                        alt=""
-                        className="rounded-lg  group-hover:opacity-40"
-                      />
-                      <p className="group-hover:text-blue-500 text-center pt-2">
-                        {item?.original_title}
-                      </p>
-                    </Link>
-                  );
-                })}
+            ) : (
+              ""
+            )}
+            {recommendations?.results?.length > 1 ? (
+              <div className="overflow-hidden">
+                <h4>Recommendations</h4>
+                <div className="grid grid-cols-5 gap-4">
+                  {recommendations?.results?.slice(0, 4)?.map((item) => {
+                    let posterImage = item?.poster_path
+                    ? url?.backdrop + item?.poster_path
+                    : NoPoster;
+                    return (
+                      <Link
+                        to={`/${mediaType}/${item?.id}`}
+                        key={item?.id}
+                        className="group relative"
+                      >
+                        <Img
+                          src={posterImage || NoPoster}
+                          alt=""
+                          className="rounded-lg  group-hover:opacity-40"
+                        />
+                        <p className="group-hover:text-blue-500 text-center pt-2">
+                          {item?.original_title || item?.name}
+                        </p>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
             {popup ? (
               <div
-                className="absolute backdrop-blur-md bg-transparent h-full w-full top-0 left-0 z-40 flex items-center justify-center "
+                className="fixed overflow-auto backdrop-blur-md bg-transparent h-screen w-full top-0 left-0 z-40 flex items-center justify-center "
                 onClick={() => setPopup(false)}
               >
                 <ReactPlayer

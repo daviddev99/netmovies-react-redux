@@ -3,9 +3,12 @@ import useFetch from "../hooks/useFetch";
 import { Switch } from "../components/Switch";
 import { Featured } from "../components/Featured";
 import { Link } from "react-router-dom";
+import { Img } from "../components/Img";
 export const Home = () => {
   const { url } = useSelector((state) => state.home);
   const { data } = useFetch("/movie/upcoming");
+  const { data: movie } = useFetch("/movie/upcoming");
+  const { data: tv } = useFetch("/tv/popular");
   const homeRandomMovie =
     data?.results?.[Math.floor(Math.random() * data.results.length)];
   const date = new Date(homeRandomMovie?.release_date).toLocaleDateString(
@@ -18,8 +21,8 @@ export const Home = () => {
   );
   return (
     <section className="w-full relative">
-      <div className="max-w-7xl mx-auto h-[600px] flex flex-col items-center justify-center">
-        <div className="absolute left-0 max-h-[600px] overflow-hidden opacity-50">
+      <div className="max-w-7xl w-[90%] mx-auto h-[600px] flex flex-col items-center justify-center">
+        <div className="absolute left-0 top-0 h-[600px] w-full overflow-hidden opacity-50">
           <img
             src={url?.backdrop + homeRandomMovie?.backdrop_path}
             alt=""
@@ -48,7 +51,7 @@ export const Home = () => {
               <Switch data={["DAY", "WEEK"]} />
             </div>
             <div className="grid grid-cols-5 gap-6 pt-4 pr-4">
-              {data?.results?.slice(0, 15).map((item) => {
+              {movie?.results?.slice(0, 15).map((item) => {
                 let posterImage = url?.backdrop + item?.poster_path;
                 let releaseDate = new Date(
                   item.release_date
@@ -58,12 +61,18 @@ export const Home = () => {
                   year: "numeric",
                 });
                 return (
-                  <Link to={`/movie/${item?.id}`} key={item?.id} className="group relative">
-                    <img
-                      src={posterImage}
-                      alt=""
-                      className="rounded-lg  group-hover:opacity-40"
-                    />
+                  <Link
+                    to={`/movie/${item?.id}`}
+                    key={item?.id}
+                    className="group relative"
+                  >
+                    <div className="group-hover:opacity-40">
+                      <Img
+                        src={posterImage}
+                        alt=""
+                        className="rounded-lg  "
+                      />
+                    </div>
                     <p className="group-hover:text-blue-500 text-center pt-2">
                       {item?.original_title}
                     </p>
@@ -89,7 +98,7 @@ export const Home = () => {
                 <Switch data={["DAY", "WEEK"]} />
               </div>
               <div className="grid grid-cols-5 gap-6 pt-4 pr-4">
-                {data?.results?.slice(0, 15).map((item) => {
+                {tv?.results?.slice(0, 15).map((item) => {
                   let posterImage = url?.backdrop + item?.poster_path;
                   let releaseDate = new Date(
                     item.release_date
@@ -126,7 +135,7 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <Featured/>
+          <Featured />
         </div>
       </div>
     </section>

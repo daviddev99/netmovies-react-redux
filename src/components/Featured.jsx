@@ -14,14 +14,14 @@ export const Featured = () => {
     setEndpoint(tab === "Movies" ? "movie" : "tv");
   };
 
-
-  const findGenresById = (genresArray,genreIds) => {
-    const selectedGenres = genreIds.map((genreId) => {
-      const genre = genresArray.find((genre) => genre.id === genreId)
-      return genre ? genre.name : null
-    }).filter(genreName => genreName !== null)
-    return selectedGenres
-  }
+  const findGenresById = (genresArray, genreIds) => {
+    const selectedGenres = genreIds?.map((genreId) => {
+        const genre = genresArray.find((genre) => genre.id === genreId);
+        return genre ? genre.name : null;
+      })
+      .filter((genreName) => genreName !== null);
+    return selectedGenres;
+  };
 
   return (
     <div className="">
@@ -30,13 +30,17 @@ export const Featured = () => {
       <div className="w-full grid pt-4 gap-6">
         {data?.results?.slice(0, 5).map((item) => {
           let posterImage = url?.backdrop + item?.poster_path;
-          const selectedGenres = findGenresById(genres,item.genre_ids)
+          const selectedGenres = findGenresById(genres, item.genre_ids);
           return (
-            <Link to={`/${endpoint}/${item.id}`} key={item?.id} className="group flex   relative gap-2">
+            <Link
+              to={`/${endpoint}/${item.id}`}
+              key={item?.id}
+              className="group flex   relative gap-2"
+            >
               <Img
                 src={posterImage}
                 alt=""
-                className="rounded-lg   group-hover:opacity-40 h-32"
+                className="rounded-lg   group-hover:opacity-40 flex-shrink-0 max-w-[100px]"
               />
               <div>
                 <p className="group-hover:text-blue-500  max-w-[20ch] ">
@@ -45,7 +49,7 @@ export const Featured = () => {
                 <p className="text-gray-400">
                   {item.vote_average.toFixed(1)}/10
                 </p>
-                <p>{selectedGenres.slice(0,2).join(", ")}</p>
+                <p>{selectedGenres.slice(0, 2).join(", ")}</p>
               </div>
             </Link>
           );
