@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { fetchFromApi } from "../api";
 import { Img } from "../components/Img";
 import NoPoster from "../assets/no-poster.png";
+import { MovieCard } from "../components/MovieCard";
 
 export const Search = () => {
   const [data, setData] = useState([]);
@@ -15,13 +16,13 @@ export const Search = () => {
   const { url } = useSelector((state) => state.home);
 
   const { inView, ref } = useInView();
-  // console.log(data);
+  console.log(data);
 
   const query = searchParams.get("query");
 
   const fetchInitialData = () => {
     setLoading(true);
-    fetchFromApi(`/search/multi?query=${query}&page=${page}`).then((res) => {
+    fetchFromApi(`/search/multi?query=${query.toLowerCase().trim()}&page=${page}`).then((res) => {
       setData(res);
       setLoading(false);
     });
@@ -57,34 +58,19 @@ export const Search = () => {
 
   return (
     <section className="w-full relative text-white">
-      <div className="max-w-7xl mx-auto  flex flex-col gap-4 pt-32 ">
+      <div className="max-w-7xl mx-auto w-[90%] min-h-screen flex flex-col gap-4 pt-32 ">
         <div className="w-full flex justify-between">
-          <h4>Search results for: {searchParams.get("query")}</h4>
+          <h4 className="text-2xl font-bold text-gray-400">Search results for: <span className="text-white">{query}</span></h4>
           <div className="flex gap-4"></div>
         </div>
-        <div className="grid grid-cols-5 gap-6 pt-4 pr-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 pt-4 pr-4">
           {data?.results?.map((item) => {
-            let posterImage = item?.poster_path
-              ? url?.backdrop + item?.poster_path
-              : NoPoster;
-
             return (
-              <Link
-                to={`/${item?.media_type === "movie" ? "movie" : "tv"}/${
-                  item?.id
-                }`}
+              <MovieCard
+                item={item}
                 key={item?.id}
-                className="group relative"
-              >
-                <Img
-                  src={posterImage}
-                  alt=""
-                  className="rounded-lg  group-hover:opacity-40"
-                />
-                <p className="group-hover:text-blue-500 text-center pt-2">
-                  {item?.original_title || item?.name}
-                </p>
-              </Link>
+                mediaType={item?.media_type}
+              />
             );
           })}
         </div>
