@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import { fetchFromApi } from "../api"
+
 const useFetch = (url) => {
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(true)
     const [error,setError] = useState(false)
+
+    
 
     useEffect(()=>{
         setLoading(true)

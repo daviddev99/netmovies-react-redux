@@ -45,7 +45,7 @@ export const Details = () => {
                 <h5 className="text-2xl italic text-gray-400">
                   {data?.tagline}
                 </h5>
-                <div className="text-lg flex gap-3">
+                <div className="text-lg flex flex-wrap gap-3">
                   {data?.genres?.map((g, i) => (
                     <p key={i} className="p-1 px-2 bg-red-500 rounded-lg">
                       {g?.name}
@@ -64,7 +64,6 @@ export const Details = () => {
                 <Trailer
                   id={data?.id}
                   mediaType={mediaType}
-                  loading={loading}
                 />
                 <Similar id={data?.id} mediaType={mediaType} />
                 <Recomendations id={data?.id} mediaType={mediaType} />

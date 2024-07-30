@@ -1,14 +1,16 @@
 import { Switch } from "./Switch";
 import { MovieCard } from "./MovieCard";
+import {  useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { useState } from "react";
 export const HomeGrid = ({ mediaType, switchData }) => {
-  const [endpoint, setEndpoint] = useState(switchData[0].toLowerCase());
+  const [endpoint, setEndpoint] = useState(switchData?.[0]?.toLowerCase() || "");
   const { data, loading } = useFetch(
-    `${mediaType === "Tv" ? "/trending" : ""}/${
+    `${mediaType === "Movies" ? "" : "/trending"}/${
       mediaType === "Movies" ? "movie" : "tv"
     }/${endpoint}`
   );
+  const navigate = useNavigate()
 
   const onActiveChange = (tab) => {
     if (tab === "TOP RATED") {
@@ -17,11 +19,11 @@ export const HomeGrid = ({ mediaType, switchData }) => {
       setEndpoint(tab.toLowerCase());
     }
   };
-
+  console.log(mediaType)
   const skeleton = () => {
     return (
       <div className="flex animate-pulse flex-col items-center gap-2 w-[170px]">
-        <div className="flex items-center justify-center w-full h-[260px]  rounded-lg   bg-blue-950">
+        <div className="flex items-center justify-center w-full h-[265px]  rounded-lg   bg-blue-950">
           <svg
             className="w-10 h-10  dark:text-gray-600"
             aria-hidden="true"
@@ -36,7 +38,6 @@ export const HomeGrid = ({ mediaType, switchData }) => {
       </div>
     );
   };
-  console.log(data);
   return (
     <div>
       <div className="flex justify-between gap-4 sm:gap-10 items-end w-full ">
@@ -45,7 +46,7 @@ export const HomeGrid = ({ mediaType, switchData }) => {
         </h3>
         <Switch data={switchData} onActiveChange={onActiveChange} />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-4 pr-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 min-h-[900px] lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-4 pr-4">
         {!loading ? (
           data?.results?.slice(0, 15).map((item) => {
             return (
@@ -58,16 +59,19 @@ export const HomeGrid = ({ mediaType, switchData }) => {
           })
         ) : (
           <>
-            
             {skeleton()}
             {skeleton()}
             {skeleton()}
             {skeleton()}
             {skeleton()}
-
           </>
         )}
       </div>
+      <button onClick={()=>{
+        navigate(`/explore/${mediaType === "Movies" ? "movie" : "tv"}`)
+      }} className="text-white">
+        See more {mediaType === "Movies" ? "Movies" : "Tv Shows"}
+      </button>
     </div>
   );
 };

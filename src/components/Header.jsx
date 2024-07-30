@@ -85,22 +85,69 @@ export const Header = () => {
         <aside
           className={
             menu
-              ? "fixed flex flex-col bg-white h-screen w-[300px] duration-300 top-0 right-0 z-30"
-              : "fixed flex flex-col bg-white h-screen w-[300px] duration-300 top-0 right-[-100%] z-30"
+              ? "fixed flex flex-col bg-[#080f28] p-4 h-screen w-[300px] duration-300 top-0 right-0 z-30"
+              : "fixed flex flex-col bg-[#080f28] p-4 h-screen w-[300px] duration-300 top-0 right-[-100%] z-30"
           }
         >
-          <div className="p-2 text-black flex justify-between items-center">
-            <h3 className=" text-2xl">Categories</h3>
+          <div className=" text-black flex justify-between items-center">
+            <h3 className=" text-2xl"></h3>
             <AiFillCloseCircle
               onClick={handleMenu}
               className="cursor-pointer text-red-600"
               size={30}
             />
           </div>
+          <ul className="flex flex-col gap-6 font-light uppercase text-white">
+            <li>
+              <Link
+                target="_parent"
+                to="/explore/movie"
+                className="tracking-widest hover:text-blue-500 duration-150"
+              >
+                Movies
+              </Link>
+            </li>
+            <li>
+              <Link
+                target="_parent"
+                to="/explore/tv"
+                className="tracking-widest hover:text-blue-500 duration-150"
+              >
+                Tv Shows
+              </Link>
+            </li>
+            <li>
+              <div className="rounded-full bg-[#080f28] border border-blue-500 py-2 px-4 flex items-center justify-between">
+                <input
+                  type="text"
+                  className="outline-none bg-transparent text-gray-400"
+                  placeholder="Ice Age, Shrek..."
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      navigate(`/search?query=${query}`, {
+                        replace: true,
+                      });
+                    }
+                  }}
+                />
+                <FaSearch
+                  className="text-blue-600"
+                  onClick={(e) => {
+                    navigate(`/search?query=${query}`);
+                    handleMenu(e)
+                  }}
+                />
+              </div>
+            </li>
+          </ul>
         </aside>
 
         {menu && (
-          <nav className="fixed w-full z-10 h-screen bg-black/80 top-0 left-0"></nav>
+          <nav className="fixed w-full z-10 h-[100dvh] bg-black/80 top-0 left-0"></nav>
         )}
       </div>
     </header>

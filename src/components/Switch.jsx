@@ -9,7 +9,7 @@ export const Switch = ({ data, onActiveChange }) => {
   };
   return (
     <div className="flex  md:justify-normal w-full">
-      {data.map((item, index) => {
+      {data?.map((item, index) => {
         return (
           <span
             key={index}

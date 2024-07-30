@@ -27,7 +27,7 @@ export const Featured = () => {
   const skeleton = () => {
     return (
       <div className="flex animate-pulse  gap-2">
-        <div className="flex items-center justify-center w-[100px] h-[150px]  rounded-lg   bg-blue-950">
+        <div className="flex items-center justify-center w-[160px] h-[150px]  rounded-lg   bg-blue-950">
           <svg
             className="w-10 h-10  dark:text-gray-600"
             aria-hidden="true"

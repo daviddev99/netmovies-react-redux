@@ -27,20 +27,22 @@ export const Home = () => {
           />
           <div className="bg-gradient-to-t absolute bottom-0 h-96 from-[#080f28] to-transparent text-white w-full"></div>
         </div>
-        <div className="flex flex-col gap-4 text-white w-full z-10">
-          <h3 className="text-3xl md:text-5xl font-bold">
-            {homeRandomMovie?.original_title}
-          </h3>
-          <div className="flex gap-2">
-            <p className="text-orange-300">
-              {homeRandomMovie?.vote_average.toFixed(1)}/10
+        {homeRandomMovie && (
+          <div className="flex flex-col gap-4 text-white w-full z-10">
+            <h3 className="text-3xl md:text-5xl font-bold">
+              {homeRandomMovie?.original_title}
+            </h3>
+            <div className="flex gap-2">
+              <p className="text-orange-300">
+                {homeRandomMovie?.vote_average.toFixed(1)}/10
+              </p>
+              <p>{date}</p>
+            </div>
+            <p className="text-md md:text-2xl text-gray-400 ">
+              {homeRandomMovie?.overview.slice(0, 200)}...
             </p>
-            <p>{date}</p>
           </div>
-          <p className="text-md md:text-2xl text-gray-400 ">
-            {homeRandomMovie?.overview.slice(0, 200)}...
-          </p>
-        </div>
+        )}
       </div>
       <div className="max-w-7xl w-[90%] mx-auto   text-white">
         <div className="flex flex-col lg:flex-row justify-between">
