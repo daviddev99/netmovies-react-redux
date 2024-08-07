@@ -72,18 +72,18 @@ export const Details = () => {
           </>
         ) : (
           <div className="flex flex-col md:flex-row gap-10 text-white  py-32 min-h-screen ">
-            <div className="bg-blue-600 h-full max-w-[350px] flex-shrink-0 max-h-[525px] w-full rounded-xl"></div>
+            <div className="animate-pulse bg-blue-600 h-full max-w-[350px] flex-shrink-0 max-h-[525px] w-full rounded-xl"></div>
             <div className=" flex flex-col gap-4">
-              <div className="h-20 bg-blue-700 w-80 rounded-full"></div>
-              <div className="w-[300px] h-14 bg-blue-700 rounded-full"></div>
-              <div className="w-[500px] h-14 bg-blue-700 rounded-full"></div>
-              <div className="h-52 w-[600px] bg-blue-700 rounded-2xl"></div>
-              <div className="w-[325px] h-[180px] rounded-xl bg-blue-600"></div>
+              <div className="h-20 animate-pulse bg-blue-700 w-80 rounded-full"></div>
+              <div className="w-[300px] h-14 animate-pulse bg-blue-700 rounded-full"></div>
+              <div className="w-[500px] h-14 animate-pulse bg-blue-700 rounded-full"></div>
+              <div className="h-52 w-[600px] animate-pulse bg-blue-700 rounded-2xl"></div>
+              <div className="w-[325px] h-[180px] rounded-xl animate-pulse bg-blue-600"></div>
               <div className="grid grid-cols-4 gap-4 w-full">
-                <div className="w-full h-52 bg-blue-600 rounded-xl"></div>
-                <div className="w-full h-52 bg-blue-600 rounded-xl"></div>
-                <div className="w-full h-52 bg-blue-600 rounded-xl"></div>
-                <div className="w-full h-52 bg-blue-600 rounded-xl"></div>
+                <div className="w-full h-52 animate-pulse bg-blue-600 rounded-xl"></div>
+                <div className="w-full h-52 animate-pulse bg-blue-600 rounded-xl"></div>
+                <div className="w-full h-52 animate-pulse bg-blue-600 rounded-xl"></div>
+                <div className="w-full h-52 animate-pulse bg-blue-600 rounded-xl"></div>
               </div>
               <div></div>
             </div>

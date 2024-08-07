@@ -9,6 +9,7 @@ import { getApiConfiguration, getGenres } from "./store/homeSlice";
 import { Details } from "./pages/Details";
 import { Explore } from "./pages/Explore";
 import { Search } from "./pages/Search";
+import {NotFound} from "./pages/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/:mediaType/:id" element={<Details />} />
         <Route path="/explore/:mediaType" element={<Explore />} />
         <Route path="/search" element={<Search />} />
+        <Route path="*" element={<NotFound/>} />
       </Routes>
       <Footer />
     </main>

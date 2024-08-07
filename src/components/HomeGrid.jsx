@@ -11,6 +11,8 @@ export const HomeGrid = ({ mediaType, switchData }) => {
     }/${endpoint}`
   );
   const navigate = useNavigate()
+  //do a better loading
+  
 
   const onActiveChange = (tab) => {
     if (tab === "TOP RATED") {

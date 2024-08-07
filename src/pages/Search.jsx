@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams,useNavigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
 import { fetchFromApi } from "../api";
@@ -10,6 +10,8 @@ export const Search = () => {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const query = searchParams.get("query");
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     setPage(1);
@@ -22,10 +24,7 @@ export const Search = () => {
     }
   });
 
-
-
   const { inView, ref } = useInView();
-
 
   const fetchInitialData = () => {
     setLoading(true);
@@ -72,25 +71,45 @@ export const Search = () => {
     );
   };
 
-
-
   return (
     <section className="w-full relative text-white">
       <div className="max-w-7xl mx-auto w-[90%]  flex flex-col gap-4 pt-32 ">
-        <div className="w-full flex justify-between">
-          <h4 className="text-2xl font-bold text-gray-400">
-            Search results for: <span className="text-white">{query}</span>
-          </h4>
-          <div className="flex gap-4"></div>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 min-h-[900px] lg:grid-cols-5 gap-6 pt-4 pr-4">
-          {!loading
-            ? data?.results?.map((item, i) => {
-                return (
-                  <MovieCard item={item} key={i} mediaType={item?.media_type} />
-                );
-              })
-            : <>
+        {!loading ? (
+          data?.results?.length === 0 ? (
+            <div className="h-[80vh] flex flex-col  justify-center items-center text-white text-4xl font-bold">
+              <span>Results not found!</span>
+              <button 
+              className=" py-2 px-4 rounded-lg text-xl mt-4 bg-blue-500"
+              onClick={()=>navigate("/")}
+              >
+
+                Go Home
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="w-full flex justify-between">
+                <h4 className="text-2xl font-bold text-gray-400">
+                  Search results for:{" "}
+                  <span className="text-white">{query}</span>
+                </h4>
+                <div className="flex gap-4"></div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 min-h-[900px] lg:grid-cols-5 gap-6 pt-4 pr-4">
+                {data?.results?.map((item, i) => {
+                  return (
+                    <MovieCard
+                      item={item}
+                      key={i}
+                      mediaType={item?.media_type}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )
+        ) : (
+          <>
             {skeleton()}
             {skeleton()}
             {skeleton()}
@@ -98,8 +117,8 @@ export const Search = () => {
             {skeleton()}
             {skeleton()}
             {skeleton()}
-            </>}
-        </div>
+          </>
+        )}
         <div ref={ref}></div>
       </div>
     </section>
